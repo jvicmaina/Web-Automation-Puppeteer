@@ -28,35 +28,35 @@ const keyword = 'Mobile';
     height: 1000,
     deviceScaleFactor: 1,
   });
-  await page.goto('https://www.algonquincollege.com/');
-  await page.screenshot({ path: './screens/algonquinhome.jpg' });
+  await page.goto('https://www.kenyans.co.ke/', { timeout: 120000 });
+  await page.screenshot({ path: './screens/Kenyanshome.jpg' });
 
-  const btn = await page.waitForSelector('button.programSearchButton');
-  await page.type('input#programSearch', keyword, { delay: 100 });
-  await btn.click();
-  await page.waitForNavigation({ waitUntil: 'load' });
-  await page.waitForSelector('table.programFilterList');
-  await page.screenshot({ path: './screens/program-list.jpg', fullPage: true });
-  const data = await page.$$eval('table.programFilterList tbody tr', (rows) => {
-    return rows
-      .map((row) => {
-        if (row.classList.contains('odd') || row.classList.contains('even')) {
-          const tds = row.querySelectorAll('td');
-          return {
-            name: tds[1].innerText,
-            area: tds[2].innerText,
-            campus: tds[3].innerText,
-            length: tds[5].innerText,
-          };
-        } else {
-          return null;
-        }
-      })
-      .filter((row) => row);
-  });
-  console.log({ data });
+  const btn = await page.waitForSelector('.news-date');
+  await page.type('.news-author', keyword, { delay: 100 });
+  //await btn.click();
+  await page.waitForNavigation({ waitUntil: 'documentloaded' });
+  await page.waitForSelector('.news-title');
+  await page.screenshot({ path: './screens/kenyansNews.jpg', fullPage: true });
+  // const data = await page.$$eval('table.programFilterList tbody tr', (rows) => {
+  //   return rows
+  //     .map((row) => {
+  //       if (row.classList.contains('odd') || row.classList.contains('even')) {
+  //         const tds = row.querySelectorAll('td');
+  //         return {
+  //           name: tds[1].innerText,
+  //           area: tds[2].innerText,
+  //           campus: tds[3].innerText,
+  //           length: tds[5].innerText,
+  //         };
+  //       } else {
+  //         return null;
+  //       }
+  //     })
+  //     .filter((row) => row);
+  // });
+  // console.log({ data });
 
-  await writeFile('./data/coursedetails.json', JSON.stringify(data), 'utf-8', (err) => {
+  await writeFile('./data/newsdetails.json', JSON.stringify(data), 'utf-8', (err) => {
     if (err) throw err;
     console.log('saved the file');
   });
