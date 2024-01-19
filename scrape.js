@@ -28,7 +28,7 @@ const keyword = 'Mobile';
     height: 1000,
     deviceScaleFactor: 1,
   });
-  await page.goto('https://www.kenyans.co.ke/', { timeout: 120000 });
+  await page.goto('https://mookh.com/', { timeout: 120000 });
   await page.screenshot({ path: './screens/Kenyanshome.jpg' });
 
   const btn = await page.waitForSelector('.news-date');
